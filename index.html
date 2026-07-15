@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flappy Arcade Premium</title>
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: #000; touch-action: none; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Adaptation résolution écran
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let gameState = 'PLAYING';
+        let bird = { y: 200, vel: 0 };
+
+        function jump() {
+            if (gameState === 'PLAYING') bird.vel = -10;
+        }
+
+        // --- GESTION TACTILE MOBILE ---
+        window.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            jump();
+        }, { passive: false });
+
+        // --- GESTION CLAVIER PC ---
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') jump();
+        });
+
+        function loop() {
+            ctx.fillStyle = '#70c5ce';
+            ctx.fillRect(0,0, canvas.width, canvas.height);
+            // Logique de jeu ici...
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>
